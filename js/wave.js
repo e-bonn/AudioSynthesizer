@@ -6,9 +6,9 @@ function Wave(type)
 Wave.prototype.init = function(type)
 {
 	this.real = [];
-    this.im = [];
+	this.im = [];
 
-    this.buildWaveForm(type);
+	this.buildWaveForm(type);
 }
 
 Wave.prototype.buildWaveForm = function(type)
