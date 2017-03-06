@@ -15,12 +15,18 @@ document.addEventListener("DOMContentLoaded", function(event)
 
 document.addEventListener("keydown", function(event)
 {
-    mySynth.playSound(233);
+	var charCode = event.keyCode || event.which;
+    var charStr = String.fromCharCode(charCode);
+	// Main octave C4 - C5
+	mySynth.playSound(mySynth.keyboard(charStr));
 });
 
 document.addEventListener("keyup", function(event)
 {
-    mySynth.stopSound(233);
+    var charCode = event.keyCode || event.which;
+    var charStr = String.fromCharCode(charCode);
+	// Main octave C4 - C5
+	mySynth.stopSound(mySynth.keyboard(charStr));
 });
 
 })();

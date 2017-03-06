@@ -16,8 +16,6 @@ Wave.prototype.buildWaveForm = function(type)
     this.real = new Float32Array(4096);
     this.im = new Float32Array(4096);
 
-    console.log(type);
-
     if(type == "sine")
     {
         this.im[1] = 1.0;

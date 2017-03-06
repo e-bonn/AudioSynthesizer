@@ -3,6 +3,33 @@ function Synth()
     this.init();
 }
 
+Synth.prototype.keyboard = function(key)
+{
+    if(key == "Q")
+        return 261.626; // c4
+    else if(key == "W")
+        return 277.183; // c4/d4
+    else if(key == "E")
+        return 293.665; // d4
+    else if(key == "R")
+        return 311.127; // d4/e4
+    else if(key == "T")
+        return 329.628; // e4
+    else if(key == "Y")
+        return 349.228; // f4
+    else if(key == "U")
+        return 369.994; // f4/g4
+    else if(key == "I")
+        return 391.995; // g4
+    else if(key == "O")
+        return 415.305; // g4/a4
+    else if(key == "P")
+        return 440; // a4
+    else if(key == "A")
+        return 466.164; // a4/b4
+    else if(key == "S")
+        return 493.883; // b4
+}
 
 Synth.prototype.init = function()
 {
