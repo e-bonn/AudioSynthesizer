@@ -5,7 +5,7 @@ var mySynth = null;
 
 var init = function()
 {
-	mySynth = new Synth();
+    mySynth = new Synth();
 };
 
 document.addEventListener("DOMContentLoaded", function(event)
@@ -15,12 +15,12 @@ document.addEventListener("DOMContentLoaded", function(event)
 
 document.addEventListener("keydown", function(event)
 {
-	mySynth.playSound(233);
+    mySynth.playSound(233);
 });
 
 document.addEventListener("keyup", function(event)
 {
-	mySynth.stopSound(233);
+    mySynth.stopSound(233);
 });
 
 })();

@@ -5,10 +5,10 @@ function Wave(type)
 
 Wave.prototype.init = function(type)
 {
-	this.real = [];
-	this.im = [];
+    this.real = [];
+    this.im = [];
 
-	this.buildWaveForm(type);
+    this.buildWaveForm(type);
 }
 
 Wave.prototype.buildWaveForm = function(type)
@@ -22,7 +22,7 @@ Wave.prototype.buildWaveForm = function(type)
     {
         this.im[1] = 1.0;
     }
-    else if (type == "square")
+        else if (type == "square")
     {
         for(var k = 1; k < this.im.length; k += 2)
         {
@@ -33,7 +33,7 @@ Wave.prototype.buildWaveForm = function(type)
     {
         for(var k = 1; k < this.im.length; k += 2)
         {
-            this.im[k] = (8.0*Math.pow(-1,k+1))/(Math.pow(Math.PI,2)*Math.pow(k,2));
+            this.im[k] = (8.0*Math.pow(-1,(k-1)/2))/(Math.pow(Math.PI,2)*Math.pow(k,2));
         }
     }
     else if (type == "sawtooth")
