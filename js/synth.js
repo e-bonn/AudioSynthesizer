@@ -3,6 +3,24 @@ function Synth()
     this.init();
 }
 
+Synth.prototype.init = function()
+{
+    window.AudioContext = window.AudioContext || window.webkitAudioContext;
+    this.context = new AudioContext();
+
+    this.waves = [];
+    // Init to sine waves
+    this.waves[0] = new Wave("sine");
+    this.waves[1] = new Wave("sine");
+
+    // Volumes for the gain nodes
+    this.volumes = [];
+    this.volumes[0] = 1;
+    this.volumes[1] = 1;
+
+    this.sounds = {};
+}
+
 Synth.prototype.keyboard = function(key)
 {
     if(key == "Q")
@@ -31,30 +49,29 @@ Synth.prototype.keyboard = function(key)
         return 493.883; // b4
 }
 
-Synth.prototype.init = function()
+Synth.prototype.changeVolume = function(osc, delta)
 {
-    window.AudioContext = window.AudioContext || window.webkitAudioContext;
-    this.context = new AudioContext();
-
-    this.waves = [];
-
-    // Init to sine waves
-    this.waves[0] = new Wave("sine");
-    this.waves[1] = new Wave("sine");
-
-    this.sounds = {};
+    if(osc >= 0 && osc <= 1)
+    {
+        this.volumes[osc] += delta;
+    }
 }
 
-Synth.prototype.playSound = function(f)
+Synth.prototype.getSoundData = function(f)
 {
-    if(this.sounds[f] === undefined)
+    if(this.sounds[f] !== undefined)
     {
-        this.sounds[f] = {};
         sound = this.sounds[f];
 
         sound.osc = [];
         sound.osc[0] = this.context.createOscillator();
         sound.osc[1] = this.context.createOscillator();
+
+        sound.gain = [];
+        sound.gain[0] = this.context.createGain();
+        sound.gain[1] = this.context.createGain();
+        sound.gain[0].gain.value = this.volumes[0];
+        sound.gain[1].gain.value = this.volumes[1];
 
         // Waves for the the AudioContext's oscillator
         var waves = [];
@@ -65,10 +82,24 @@ Synth.prototype.playSound = function(f)
         sound.osc[0].frequency.value = f;
         sound.osc[1].setPeriodicWave(waves[1]);
         sound.osc[1].frequency.value = f;
+    }
+}
 
-        sound.osc[0].connect(this.context.destination);
+Synth.prototype.playSound = function(f)
+{
+    if(this.sounds[f] === undefined)
+    {
+        this.sounds[f] = {};
+
+        this.getSoundData(f);
+
+        // Play the sound -- two oscillators combined
+        sound.osc[0].connect(sound.gain[0]);
+        sound.gain[0].connect(this.context.destination);
         sound.osc[0].start();
-        sound.osc[1].connect(this.context.destination);
+
+        sound.osc[1].connect(sound.gain[1]);
+        sound.gain[1].connect(this.context.destination);
         sound.osc[1].start();
     }	
 }
