@@ -52,7 +52,7 @@ Synth.prototype.keyboard = function(key)
         return 0;
 }
 
-Synth.prototype.changeVolume = function(osc, type)
+Synth.prototype.changeWaveform = function(osc, type)
 {
     if(osc >= 0 && osc <= 1)
     {
@@ -60,7 +60,7 @@ Synth.prototype.changeVolume = function(osc, type)
     }
 }
 
-Synth.prototype.changeWaveform = function(osc, delta)
+Synth.prototype.changeVolume = function(osc, delta)
 {
     if(osc >= 0 && osc <= 1)
     {
