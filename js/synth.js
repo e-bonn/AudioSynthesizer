@@ -23,6 +23,7 @@ Synth.prototype.init = function()
 
 Synth.prototype.keyboard = function(key)
 {
+    // Main octave c4 - c5 -- TODO: add more
     if(key == "Q")
         return 261.626; // c4
     else if(key == "W")
@@ -47,15 +48,27 @@ Synth.prototype.keyboard = function(key)
         return 466.164; // a4/b4
     else if(key == "S")
         return 493.883; // b4
+    else
+        return 0;
 }
 
-Synth.prototype.changeVolume = function(osc, delta)
+Synth.prototype.changeVolume = function(osc, type)
+{
+    if(osc >= 0 && osc <= 1)
+    {
+        this.waves[osc].setWaveformTo(type);
+    }
+}
+
+Synth.prototype.changeWaveform = function(osc, delta)
 {
     if(osc >= 0 && osc <= 1)
     {
         this.volumes[osc] += delta;
+        this.volumes[osc] = Math.max(this.volumes[osc],0); // Volume is absolute in GainNode, so lower limit is 0
     }
 }
+
 
 Synth.prototype.getSoundData = function(f)
 {
