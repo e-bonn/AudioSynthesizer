@@ -13,10 +13,24 @@ Synth.prototype.init = function()
     this.waves[0] = new Wave("sine");
     this.waves[1] = new Wave("sine");
 
+    this.envelopeParms = [];
+    this.envelopeParms[0] = {
+        "attack"    : 0,
+        "decay"     : 0.5,
+        "sustain"   : 0.5,
+        "release"   : 0.5
+    };
+    this.envelopeParms[1] = {
+        "attack"    : 0,
+        "decay"     : 0.5,
+        "sustain"   : 0.5,
+        "release"   : 0.5
+    };
+
     // Volumes for the gain nodes
     this.volumes = [];
-    this.volumes[0] = 1;
-    this.volumes[1] = 1;
+    this.volumes[0] = 0.5;
+    this.volumes[1] = 0.5;
 
     this.sounds = {};
 }
@@ -60,15 +74,13 @@ Synth.prototype.changeWaveform = function(osc, type)
     }
 }
 
-Synth.prototype.changeVolume = function(osc, delta)
+Synth.prototype.setVolume = function(osc, vol)
 {
     if(osc >= 0 && osc <= 1)
     {
-        this.volumes[osc] += delta;
-        this.volumes[osc] = Math.max(this.volumes[osc],0); // Volume is absolute in GainNode, so lower limit is 0
+        this.volumes[osc] = vol;
     }
 }
-
 
 Synth.prototype.getSoundData = function(f)
 {
@@ -95,6 +107,14 @@ Synth.prototype.getSoundData = function(f)
         sound.osc[0].frequency.value = f;
         sound.osc[1].setPeriodicWave(waves[1]);
         sound.osc[1].frequency.value = f;
+
+        sound.adsr = [];
+        sound.adsr[0] = new Envelope(this.envelopeParms[0]);
+        sound.adsr[1] = new Envelope(this.envelopeParms[1]);
+        sound.adsr[0].connect(sound.gain[0].gain);
+        sound.adsr[1].connect(sound.gain[1].gain);
+        sound.adsr[0].rampUp(this.volumes[0],this.context);
+        sound.adsr[1].rampUp(this.volumes[1],this.context);
     }
 }
 
@@ -121,8 +141,8 @@ Synth.prototype.stopSound = function(f)
 {
     if(this.sounds[f] !== undefined)
     {
-        this.sounds[f].osc[0].stop();
-        this.sounds[f].osc[1].stop();
+        this.sounds[f].adsr[0].rampDown(this.context);
+        this.sounds[f].adsr[1].rampDown(this.context);
         delete this.sounds[f];
     }
 }

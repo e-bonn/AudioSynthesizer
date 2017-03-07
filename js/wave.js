@@ -20,7 +20,7 @@ Wave.prototype.setWaveformTo = function(type)
     {
         this.im[1] = 1.0;
     }
-        else if (type == "square")
+    else if (type == "square")
     {
         for(var k = 1; k < this.im.length; k += 2)
         {
