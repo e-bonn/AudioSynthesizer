@@ -27,6 +27,16 @@ Synth.prototype.init = function()
         "release"   : 0.5
     };
 
+    this.lfoParms = [];
+    this.lfoParms[0] = {
+        "freq"      : 1,
+        "type"      : "sine",
+    };
+    this.lfoParms[1] = {
+        "freq"      : 1,
+        "type"      : "sine",
+    };
+
     // Volumes for the gain nodes
     this.volumes = [];
     this.volumes[0] = 0.5;
@@ -35,8 +45,9 @@ Synth.prototype.init = function()
     this.sounds = {};
 }
 
-Synth.prototype.keyboard = function(key)
+Synth.prototype.keyboard = function(charCode)
 {
+    var key = String.fromCharCode(charCode);
     // Main octave c4 - c5 -- TODO: add more
     if(key == "Q")
         return 261.626; // c4
@@ -58,9 +69,9 @@ Synth.prototype.keyboard = function(key)
         return 415.305; // g4/a4
     else if(key == "P")
         return 440; // a4
-    else if(key == "A")
+    else if(charCode == 219)
         return 466.164; // a4/b4
-    else if(key == "S")
+    else if(charCode == 221)
         return 493.883; // b4
     else
         return 0;
@@ -80,6 +91,16 @@ Synth.prototype.setVolume = function(osc, vol)
     {
         this.volumes[osc] = vol;
     }
+}
+
+Synth.prototype.changeEnvelope = function(osc, envelopeParms)
+{
+    // TODO
+}
+
+Synth.prototype.changeLfo = function(osc, lfoParms)
+{
+    // TODO
 }
 
 Synth.prototype.getSoundData = function(f)
@@ -111,10 +132,18 @@ Synth.prototype.getSoundData = function(f)
         sound.adsr = [];
         sound.adsr[0] = new Envelope(this.envelopeParms[0]);
         sound.adsr[1] = new Envelope(this.envelopeParms[1]);
-        sound.adsr[0].connect(sound.gain[0].gain);
+        sound.adsr[0].connect(sound.gain[0].gain); // ADSR should affect volume, so connect it to that
         sound.adsr[1].connect(sound.gain[1].gain);
         sound.adsr[0].rampUp(this.volumes[0],this.context);
         sound.adsr[1].rampUp(this.volumes[1],this.context);
+
+        sound.lfo = [];
+        sound.lfo[0] = new LFO(this.lfoParms[0]);
+        sound.lfo[1] = new LFO(this.lfoParms[1]);
+        sound.lfo[0].connect(sound.gain[0].gain); // LFO should affect volume, so connect it to that
+        sound.lfo[1].connect(sound.gain[1].gain);
+        sound.lfo[0].start(this.context);
+        sound.lfo[1].start(this.context);
     }
 }
 
@@ -143,6 +172,8 @@ Synth.prototype.stopSound = function(f)
     {
         this.sounds[f].adsr[0].rampDown(this.context);
         this.sounds[f].adsr[1].rampDown(this.context);
+        this.sounds[f].lfo[0].stop();
+        this.sounds[f].lfo[1].stop();
         delete this.sounds[f];
     }
 }
