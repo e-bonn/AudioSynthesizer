@@ -95,6 +95,14 @@ Synth.prototype.setVolume = function(osc, vol)
     }
 }
 
+Synth.prototype.shiftPhase = function(osc, k)
+{
+    if(osc >= 0 && osc <= 1)
+    {
+        this.waves[osc].shiftPhase(k);
+    }
+}
+
 Synth.prototype.changeEnvelope = function(osc, envelopeParms)
 {
     // TODO
