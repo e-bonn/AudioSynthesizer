@@ -7,8 +7,10 @@ LFO.prototype.init = function(lfoParms)
 {
     this.freq = lfoParms.freq;
     this.type = lfoParms.type;
+    this.gain = lfoParms.gain;
 
     this.osc = null;
+    this.gainObj = null;
     this.parm = null;
 }
 
@@ -24,7 +26,13 @@ LFO.prototype.start = function(context)
 
     this.osc.frequency.value = this.freq;
     this.osc.type = this.type;
-    this.osc.connect(this.parm);
+
+    // LFO needs its own volume control
+    this.gainObj = context.createGain();
+    this.gainObj.gain.value = this.gain;
+
+    this.osc.connect(this.gainObj);
+    this.gainObj.connect(this.parm);
     this.osc.start();
 }
 

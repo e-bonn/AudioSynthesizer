@@ -29,12 +29,14 @@ Synth.prototype.init = function()
 
     this.lfoParms = [];
     this.lfoParms[0] = {
-        "freq"      : 1,
+        "freq"      : 10,
         "type"      : "sine",
+        "gain"      : 0.05
     };
     this.lfoParms[1] = {
-        "freq"      : 1,
+        "freq"      : 10,
         "type"      : "sine",
+        "gain"      : 0.05
     };
 
     // Volumes for the gain nodes
