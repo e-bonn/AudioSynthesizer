@@ -103,14 +103,20 @@ Synth.prototype.shiftPhase = function(osc, k)
     }
 }
 
-Synth.prototype.changeEnvelope = function(osc, envelopeParms)
+Synth.prototype.setEnvelope = function(osc, envelopeParms)
 {
-    // TODO
+    if(osc >= 0 && osc <= 1)
+    {
+        this.envelopeParms[osc] = envelopeParms;
+    }
 }
 
-Synth.prototype.changeLfo = function(osc, lfoParms)
+Synth.prototype.setLfo = function(osc, lfoParms)
 {
-    // TODO
+   if(osc >= 0 && osc <= 1)
+    {
+        this.lfoParms[osc] = lfoParms;
+    }
 }
 
 Synth.prototype.getSoundData = function(f)
