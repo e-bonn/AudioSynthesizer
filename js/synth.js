@@ -10,8 +10,8 @@ Synth.prototype.init = function()
 
     this.waves = [];
     // Init to sine waves
-    this.waves[0] = new Wave("sine");
-    this.waves[1] = new Wave("sine");
+    this.waves[0] = new Wave("triangle");
+    this.waves[1] = new Wave("square");
 
     this.envelopeParms = [];
     this.envelopeParms[0] = {

@@ -22,8 +22,8 @@ Wave.prototype.shiftPhase = function(k)
     // | sin(theta)     cos(theta)  |
     for(var i = 1; i < this.im.length; i++)
     {
-        this.real[osc][i] = this.real[osc][i]*Math.cos(shiftVal) - this.im[osc][i]*Math.sin(shiftVal);
-        this.im[osc][i] = this.real[osc][i]*Math.sin(shiftVal) + this.im[osc][i]*Math.cos(shiftVal);
+        this.real[i] = this.real[i]*Math.cos(shiftVal) - this.im[i]*Math.sin(shiftVal);
+        this.im[i] = this.real[i]*Math.sin(shiftVal) + this.im[i]*Math.cos(shiftVal);
     }
 }
 
