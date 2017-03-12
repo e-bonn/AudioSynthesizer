@@ -7,6 +7,7 @@ Wave.prototype.init = function(type)
 {
     this.real = [];
     this.im = [];
+    this.type = type;
 
     this.setWaveformTo(type);
 }
@@ -31,6 +32,7 @@ Wave.prototype.setWaveformTo = function(type)
 {
     this.real = new Float32Array(4096);
     this.im = new Float32Array(4096);
+    this.type = type;
 
     if(type == "sine")
     {

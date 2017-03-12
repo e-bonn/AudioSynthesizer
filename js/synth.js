@@ -39,6 +39,18 @@ Synth.prototype.init = function()
         "gain"      : 0.05
     };
 
+    this.filterParms = [];
+    this.filterParms[0] = {
+        "type"      : "highpass",
+        "cutoffFreq" : 500,
+        "Q"         : 0
+    };
+    this.filterParms[1] = {
+        "type"      : "highpass",
+        "cutoffFreq" : 500,
+        "Q"         : 0
+    };
+
     // Volumes for the gain nodes
     this.volumes = [];
     this.volumes[0] = 0.5;
@@ -119,6 +131,14 @@ Synth.prototype.setLfo = function(osc, lfoParms)
     }
 }
 
+Synth.prototype.setFilter = function(osc, filterParms)
+{
+   if(osc >= 0 && osc <= 1)
+    {
+        this.filterParms[osc] = filterParms;
+    }
+}
+
 Synth.prototype.getSoundData = function(f)
 {
     if(this.sounds[f] !== undefined)
@@ -145,21 +165,27 @@ Synth.prototype.getSoundData = function(f)
         sound.osc[1].setPeriodicWave(waves[1]);
         sound.osc[1].frequency.value = f;
 
-        sound.adsr = [];
-        sound.adsr[0] = new Envelope(this.envelopeParms[0]);
-        sound.adsr[1] = new Envelope(this.envelopeParms[1]);
-        sound.adsr[0].connect(sound.gain[0].gain); // ADSR should affect volume, so connect it to that
-        sound.adsr[1].connect(sound.gain[1].gain);
-        sound.adsr[0].rampUp(this.volumes[0],this.context);
-        sound.adsr[1].rampUp(this.volumes[1],this.context);
+        sound.envelopes = [];
+        sound.envelopes[0] = new Envelope(this.envelopeParms[0]);
+        sound.envelopes[1] = new Envelope(this.envelopeParms[1]);
+        sound.envelopes[0].connect(sound.gain[0].gain); // Envelope should affect volume, so connect it to that
+        sound.envelopes[1].connect(sound.gain[1].gain);
+        sound.envelopes[0].rampUp(this.volumes[0],this.context);
+        sound.envelopes[1].rampUp(this.volumes[1],this.context);
 
-        sound.lfo = [];
-        sound.lfo[0] = new LFO(this.lfoParms[0]);
-        sound.lfo[1] = new LFO(this.lfoParms[1]);
-        sound.lfo[0].connect(sound.gain[0].gain); // LFO should affect volume, so connect it to that
-        sound.lfo[1].connect(sound.gain[1].gain);
-        sound.lfo[0].start(this.context);
-        sound.lfo[1].start(this.context);
+        sound.lfos = [];
+        sound.lfos[0] = new LFO(this.lfoParms[0]);
+        sound.lfos[1] = new LFO(this.lfoParms[1]);
+        sound.lfos[0].connect(sound.gain[0].gain); // LFO should affect volume, so connect it to that
+        sound.lfos[1].connect(sound.gain[1].gain);
+        sound.lfos[0].start(this.context);
+        sound.lfos[1].start(this.context);
+
+        sound.filters = [];
+        sound.filters[0] = new Filter(this.filterParms[0]);
+        sound.filters[0].connect(this.context.destination,this.context);
+        sound.filters[1] = new Filter(this.filterParms[1]);
+        sound.filters[1].connect(this.context.destination,this.context);
     }
 }
 
@@ -173,11 +199,13 @@ Synth.prototype.playSound = function(f)
 
         // Play the sound -- two oscillators combined
         sound.osc[0].connect(sound.gain[0]);
-        sound.gain[0].connect(this.context.destination);
+        sound.gain[0].connect(sound.filters[0].filter);
+        sound.filters[0].start();
         sound.osc[0].start();
 
         sound.osc[1].connect(sound.gain[1]);
-        sound.gain[1].connect(this.context.destination);
+        sound.gain[1].connect(sound.filters[1].filter);
+        sound.filters[1].start();
         sound.osc[1].start();
     }	
 }
@@ -186,10 +214,10 @@ Synth.prototype.stopSound = function(f)
 {
     if(this.sounds[f] !== undefined)
     {
-        this.sounds[f].adsr[0].rampDown(this.context);
-        this.sounds[f].adsr[1].rampDown(this.context);
-        this.sounds[f].lfo[0].stop();
-        this.sounds[f].lfo[1].stop();
+        this.sounds[f].envelopes[0].rampDown(this.context);
+        this.sounds[f].envelopes[1].rampDown(this.context);
+        this.sounds[f].lfos[0].stop();
+        this.sounds[f].lfos[1].stop();
         delete this.sounds[f];
     }
 }

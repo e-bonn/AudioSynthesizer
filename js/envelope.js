@@ -1,3 +1,4 @@
+// Envelope class is an ADSR Envelope
 function Envelope(envelopeParms)
 {
     this.init(envelopeParms);

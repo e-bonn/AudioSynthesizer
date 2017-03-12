@@ -22,10 +22,13 @@ LFO.prototype.connect = function(parm)
 
 LFO.prototype.start = function(context)
 {
+    var wave = new Wave(this.type);
+    var contextWave = context.createPeriodicWave(wave.real, wave.im);
+
     this.osc = context.createOscillator();
 
+    this.osc.setPeriodicWave(contextWave);
     this.osc.frequency.value = this.freq;
-    this.osc.type = this.type;
 
     // LFO needs its own volume control
     this.gainObj = context.createGain();
