@@ -61,8 +61,10 @@ Synth.prototype.init = function()
 
 Synth.prototype.keyboard = function(charCode)
 {
+    // TODO -- find a cleaner solution to this
+
     var key = String.fromCharCode(charCode);
-    // Main octave c4 - c5 -- TODO: add more
+    // Main Octave: C4-C5
     if(key == "Q")
         return 261.626; // c4
     else if(key == "W")
@@ -87,6 +89,32 @@ Synth.prototype.keyboard = function(charCode)
         return 466.164; // a4/b4
     else if(charCode == 221)
         return 493.883; // b4
+
+    // Octave 2: C5-C6
+    else if(key == "1")
+        return 523.251; // c5
+    else if(key == "2")
+        return 554.365; // c5/d5
+    else if(key == "3")
+        return 587.330; // d5
+    else if(key == "4")
+        return 622.254; // d5/e5
+    else if(key == "5")
+        return 659.255; // e5
+    else if(key == "6")
+        return 698.456; // f5
+    else if(key == "7")
+        return 739.989; // f5/g5
+    else if(key == "8")
+        return 783.991; // g5
+    else if(key == "9")
+        return 830.609; // g5/a5
+    else if(key == "0")
+        return 880; // a5
+    else if(charCode == 189)
+        return 932.328; // a5/b5
+    else if(charCode == 187)
+        return 987.767; // b5
     else
         return 0;
 }
