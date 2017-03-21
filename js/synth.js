@@ -10,111 +10,103 @@ Synth.prototype.init = function()
 
     this.waves = [];
     // Init to sine waves
-    this.waves[0] = new Wave("triangle");
-    this.waves[1] = new Wave("square");
+    this.waves[0] = new Wave("sine");
+    this.waves[1] = new Wave("sine");
 
     this.envelopeParms = [];
     this.envelopeParms[0] = {
         "attack"    : 0,
-        "decay"     : 0.5,
+        "decay"     : 0,
         "sustain"   : 0.5,
-        "release"   : 0.5
+        "release"   : 0.2
     };
     this.envelopeParms[1] = {
         "attack"    : 0,
-        "decay"     : 0.5,
+        "decay"     : 0,
         "sustain"   : 0.5,
-        "release"   : 0.5
+        "release"   : 0.2
     };
 
     this.lfoParms = [];
     this.lfoParms[0] = {
-        "freq"      : 10,
+        "freq"      : 5,
         "type"      : "sine",
         "gain"      : 0.05
     };
     this.lfoParms[1] = {
-        "freq"      : 10,
+        "freq"      : 5,
         "type"      : "sine",
         "gain"      : 0.05
     };
 
     this.filterParms = [];
     this.filterParms[0] = {
-        "type"      : "highpass",
-        "cutoffFreq" : 500,
+        "type"      : "lowpass",
+        "cutoffFreq" : 1000,
         "Q"         : 0
     };
     this.filterParms[1] = {
-        "type"      : "highpass",
-        "cutoffFreq" : 500,
+        "type"      : "lowpass",
+        "cutoffFreq" : 1000,
         "Q"         : 0
     };
+
+    this.baseOctave =
+    [
+        32.7032,
+        34.6478,
+        36.7081,
+        38.8909,
+        41.2034,
+        43.6535,
+        46.2493,
+        48.9994,
+        51.9131,
+        55.0000,
+        58.2705,
+        61.7354
+    ];
 
     // Volumes for the gain nodes
     this.volumes = [];
     this.volumes[0] = 0.5;
     this.volumes[1] = 0.5;
 
+    this.octave = 4;
+
     this.sounds = {};
 }
 
 Synth.prototype.keyboard = function(charCode)
 {
-    // TODO -- find a cleaner solution to this
-
     var key = String.fromCharCode(charCode);
-    // Main Octave: C4-C5
-    if(key == "Q")
-        return 261.626; // c4
-    else if(key == "W")
-        return 277.183; // c4/d4
-    else if(key == "E")
-        return 293.665; // d4
-    else if(key == "R")
-        return 311.127; // d4/e4
-    else if(key == "T")
-        return 329.628; // e4
-    else if(key == "Y")
-        return 349.228; // f4
-    else if(key == "U")
-        return 369.994; // f4/g4
-    else if(key == "I")
-        return 391.995; // g4
-    else if(key == "O")
-        return 415.305; // g4/a4
-    else if(key == "P")
-        return 440; // a4
-    else if(charCode == 219)
-        return 466.164; // a4/b4
-    else if(charCode == 221)
-        return 493.883; // b4
 
-    // Octave 2: C5-C6
-    else if(key == "1")
-        return 523.251; // c5
-    else if(key == "2")
-        return 554.365; // c5/d5
-    else if(key == "3")
-        return 587.330; // d5
-    else if(key == "4")
-        return 622.254; // d5/e5
-    else if(key == "5")
-        return 659.255; // e5
-    else if(key == "6")
-        return 698.456; // f5
-    else if(key == "7")
-        return 739.989; // f5/g5
-    else if(key == "8")
-        return 783.991; // g5
-    else if(key == "9")
-        return 830.609; // g5/a5
-    else if(key == "0")
-        return 880; // a5
-    else if(charCode == 189)
-        return 932.328; // a5/b5
-    else if(charCode == 187)
-        return 987.767; // b5
+    // One full Octave
+    if(key == "Q")
+        return Math.pow(2,this.octave-1)*this.baseOctave[0]; // c
+    else if(key == "W")
+        return Math.pow(2,this.octave-1)*this.baseOctave[1]; // c/d
+    else if(key == "E")
+        return Math.pow(2,this.octave-1)*this.baseOctave[2]; // d
+    else if(key == "R")
+        return Math.pow(2,this.octave-1)*this.baseOctave[3]; // d/e
+    else if(key == "T")
+        return Math.pow(2,this.octave-1)*this.baseOctave[4]; // e
+    else if(key == "Y")
+        return Math.pow(2,this.octave-1)*this.baseOctave[5]; // f
+    else if(key == "U")
+        return Math.pow(2,this.octave-1)*this.baseOctave[6]; // f/g
+    else if(key == "I")
+        return Math.pow(2,this.octave-1)*this.baseOctave[7]; // g
+    else if(key == "O")
+        return Math.pow(2,this.octave-1)*this.baseOctave[8]; // g/a
+    else if(key == "P")
+        return Math.pow(2,this.octave-1)*this.baseOctave[9]; // a
+    else if(charCode == 219)
+        return Math.pow(2,this.octave-1)*this.baseOctave[10]; // a/b
+    else if(charCode == 221)
+        return Math.pow(2,this.octave-1)*this.baseOctave[11]; // b
+
     else
         return 0;
 }
@@ -166,6 +158,12 @@ Synth.prototype.setFilter = function(osc, filterParms)
         this.filterParms[osc] = filterParms;
     }
 }
+
+Synth.prototype.setOctave = function(octave)
+{
+   this.octave = octave;
+}
+
 
 Synth.prototype.getSoundData = function(f)
 {
