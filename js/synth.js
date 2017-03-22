@@ -41,11 +41,13 @@ Synth.prototype.init = function()
 
     this.filterParms = [];
     this.filterParms[0] = {
+        "enabled"   : true,
         "type"      : "lowpass",
         "cutoffFreq" : 1000,
         "Q"         : 0
     };
     this.filterParms[1] = {
+        "enabled"   : true,
         "type"      : "lowpass",
         "cutoffFreq" : 1000,
         "Q"         : 0
@@ -209,9 +211,12 @@ Synth.prototype.getSoundData = function(f)
 
         sound.filters = [];
         sound.filters[0] = new Filter(this.filterParms[0]);
-        sound.filters[0].connect(this.context.destination,this.context);
+        if(sound.filters[0].enabled)
+            sound.filters[0].connect(this.context.destination,this.context);
+
         sound.filters[1] = new Filter(this.filterParms[1]);
-        sound.filters[1].connect(this.context.destination,this.context);
+        if(sound.filters[1].enabled)
+            sound.filters[1].connect(this.context.destination,this.context);
     }
 }
 
@@ -225,13 +230,27 @@ Synth.prototype.playSound = function(f)
 
         // Play the sound -- two oscillators combined
         sound.osc[0].connect(sound.gain[0]);
-        sound.gain[0].connect(sound.filters[0].filter);
-        sound.filters[0].start();
+        if(sound.filters[0].enabled)
+        {
+            sound.gain[0].connect(sound.filters[0].filter);
+            sound.filters[0].start();
+        }
+        else
+        {
+            sound.gain[0].connect(this.context.destination);
+        }
         sound.osc[0].start();
 
         sound.osc[1].connect(sound.gain[1]);
-        sound.gain[1].connect(sound.filters[1].filter);
-        sound.filters[1].start();
+        if(sound.filters[1].enabled)
+        {
+            sound.gain[1].connect(sound.filters[1].filter);
+            sound.filters[1].start();
+        }
+        else
+        {
+            sound.gain[1].connect(this.context.destination);   
+        }
         sound.osc[1].start();
     }	
 }

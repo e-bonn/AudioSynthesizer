@@ -5,6 +5,7 @@ function Filter(filterParms)
 
 Filter.prototype.init = function(filterParms)
 {
+    this.enabled = filterParms.enabled;
     this.type = filterParms.type;
     this.cutoffFreq = filterParms.cutoffFreq;
     this.Q = filterParms.Q;
