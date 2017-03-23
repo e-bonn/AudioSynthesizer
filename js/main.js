@@ -31,4 +31,12 @@ document.addEventListener("keyup", function(event)
         mySynth.stopSound(freq);
 });
 
+var draw = function()
+{
+    for(var analyser in mySynth.analysers)
+    {
+
+    }
+}
+
 })();

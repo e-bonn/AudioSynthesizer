@@ -54,9 +54,9 @@ Synth.prototype.init = function()
     };
 
     this.reverbParms = {
-        "enabled"   : false,
-        "duration"  : 0.01,
-        "decay"     : 1
+        "enabled"   : true,
+        "duration"  : 1,
+        "decay"     : 0,
     };
 
     this.delayTime = 0.1;
@@ -85,6 +85,7 @@ Synth.prototype.init = function()
     this.octave = 4;
 
     this.sounds = {};
+    this.analysers = {};
 }
 
 Synth.prototype.keyboard = function(charCode)
@@ -196,8 +197,8 @@ Synth.prototype.buildConvolver = function(convolver)
     // http://stackoverflow.com/questions/34482319/web-audio-api-how-do-i-add-a-working-convolver
     for (var i = 0; i < size; i++)
     {
-        impulseL[i] = (Math.random()*2+1) * Math.pow(1-i/size, this.reverbParms.decay);
-        impulseR[i] = (Math.random()*2+1) * Math.pow(1-i/size, this.reverbParms.decay);
+        impulseL[i] = Math.random() * Math.pow(1-i/size, this.reverbParms.decay);
+        impulseR[i] = Math.random() * Math.pow(1-i/size, this.reverbParms.decay);
     }
 
     convolver.buffer = impulse;
@@ -318,7 +319,10 @@ Synth.prototype.playSound = function(f)
             sound.convolver.connect(sound.delay);
         }
 
-        sound.delay.connect(this.context.destination);
+        // One analyser per sound, draw each individual sound wave
+        this.analysers[f] = this.context.createAnalyser();
+        sound.delay.connect(this.analysers[f]);
+        this.analysers[f].connect(this.context.destination);
     }	
 }
 
@@ -331,5 +335,6 @@ Synth.prototype.stopSound = function(f)
         this.sounds[f].lfos[0].stop();
         this.sounds[f].lfos[1].stop();
         delete this.sounds[f];
+        delete this.analysers[f];
     }
 }
