@@ -54,7 +54,7 @@ Synth.prototype.init = function()
     };
 
     this.reverbParms = {
-        "enabled"   : true,
+        "enabled"   : false,
         "duration"  : 1,
         "decay"     : 0,
     };
