@@ -53,6 +53,14 @@ Synth.prototype.init = function()
         "Q"         : 0
     };
 
+    this.reverbParms = {
+        "enabled"   : false,
+        "duration"  : 0.01,
+        "decay"     : 1
+    };
+
+    this.delayTime = 0.1;
+
     this.baseOctave =
     [
         32.7032,
@@ -147,7 +155,7 @@ Synth.prototype.setEnvelope = function(osc, envelopeParms)
 
 Synth.prototype.setLfo = function(osc, lfoParms)
 {
-   if(osc >= 0 && osc <= 1)
+    if(osc >= 0 && osc <= 1)
     {
         this.lfoParms[osc] = lfoParms;
     }
@@ -155,7 +163,7 @@ Synth.prototype.setLfo = function(osc, lfoParms)
 
 Synth.prototype.setFilter = function(osc, filterParms)
 {
-   if(osc >= 0 && osc <= 1)
+    if(osc >= 0 && osc <= 1)
     {
         this.filterParms[osc] = filterParms;
     }
@@ -163,9 +171,37 @@ Synth.prototype.setFilter = function(osc, filterParms)
 
 Synth.prototype.setOctave = function(octave)
 {
-   this.octave = octave;
+    this.octave = octave;
 }
 
+Synth.prototype.setReverb = function(reverbParms)
+{
+    this.reverbParms = reverbParms;
+}
+
+Synth.prototype.setDelayTime = function(delayTime)
+{
+    this.delayTime = delayTime;
+}
+
+Synth.prototype.buildConvolver = function(convolver)
+{
+    var sampleRate = this.context.sampleRate;
+    var size = sampleRate*this.reverbParms.duration;
+    var impulse = this.context.createBuffer(2, size, sampleRate);
+    var impulseL = impulse.getChannelData(0);
+    var impulseR = impulse.getChannelData(1);
+
+    // Generate noise on logarithmic decay curve:
+    // http://stackoverflow.com/questions/34482319/web-audio-api-how-do-i-add-a-working-convolver
+    for (var i = 0; i < size; i++)
+    {
+        impulseL[i] = (Math.random()*2+1) * Math.pow(1-i/size, this.reverbParms.decay);
+        impulseR[i] = (Math.random()*2+1) * Math.pow(1-i/size, this.reverbParms.decay);
+    }
+
+    convolver.buffer = impulse;
+}
 
 Synth.prototype.getSoundData = function(f)
 {
@@ -209,14 +245,29 @@ Synth.prototype.getSoundData = function(f)
         sound.lfos[0].start(this.context);
         sound.lfos[1].start(this.context);
 
+        sound.delay = this.context.createDelay();
+        sound.delay.delayTime.value = this.delayTime;
+
+        if(this.reverbParms.enabled)
+        {
+            sound.convolver = this.context.createConvolver();
+            this.buildConvolver(sound.convolver);
+        }
+
+        var filterConnection;
+        if(this.reverbParms.enabled)
+            filterConnection = sound.convolver;
+        else
+            filterConnection = sound.delay;
+
         sound.filters = [];
         sound.filters[0] = new Filter(this.filterParms[0]);
         if(sound.filters[0].enabled)
-            sound.filters[0].connect(this.context.destination,this.context);
+            sound.filters[0].connect(filterConnection,this.context);
 
         sound.filters[1] = new Filter(this.filterParms[1]);
         if(sound.filters[1].enabled)
-            sound.filters[1].connect(this.context.destination,this.context);
+            sound.filters[1].connect(filterConnection,this.context);
     }
 }
 
@@ -228,30 +279,46 @@ Synth.prototype.playSound = function(f)
 
         this.getSoundData(f);
 
-        // Play the sound -- two oscillators combined
+        // Play Oscillator 1
         sound.osc[0].connect(sound.gain[0]);
         if(sound.filters[0].enabled)
         {
             sound.gain[0].connect(sound.filters[0].filter);
             sound.filters[0].start();
         }
-        else
+        else if(!sound.filters[0].enabled && this.reverbParms.enabled)
         {
-            sound.gain[0].connect(this.context.destination);
+            sound.gain[0].connect(sound.convolver);
+        }
+        else if(!sound.filters[0].enabled && !this.reverbParms.enabled)
+        {
+            sound.gain[0].connect(sound.delay);
         }
         sound.osc[0].start();
 
+        // Play Oscillator 2
         sound.osc[1].connect(sound.gain[1]);
         if(sound.filters[1].enabled)
         {
-            sound.gain[1].connect(sound.filters[1].filter);
+            sound.gain[1].connect(sound.filters[0].filter);
             sound.filters[1].start();
         }
-        else
+        else if(!sound.filters[1].enabled && this.reverbParms.enabled)
         {
-            sound.gain[1].connect(this.context.destination);   
+            sound.gain[1].connect(sound.convolver);
+        }
+        else if(!sound.filters[1].enabled && !this.reverbParms.enabled)
+        {
+            sound.gain[1].connect(sound.delay);
         }
         sound.osc[1].start();
+
+        if(this.reverbParms.enabled)
+        {
+            sound.convolver.connect(sound.delay);
+        }
+
+        sound.delay.connect(this.context.destination);
     }	
 }
 
