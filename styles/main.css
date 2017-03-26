@@ -26,24 +26,106 @@ body {
   border: 5px outset #CCFFFF;
   border-radius: 5px;
   height: 200px;
-  width: 1000px;
+  width: 1040px;
   margin-left: 20px;
   margin-top: 20px;
 }
 
-.oscheading {
+.osc-heading {
   color: #CCFFFF;
-  font-size: 20px;
+  font-size: 22px;
 }
 
-.wavebuttons {
+.sec-heading {
+  color: #CCFFFF;
+  font-size: 18px;
+  margin-top: -5px;
+  position: absolute;
+  text-align: center;
+}
+
+#big-heading {
+  width: 275px;
+}
+
+#small-heading {
+  width: 250px;
+}
+
+.vertical-line {
+  background-color: #CCFFFF;
+  float: left;
   height: 160px;
-  margin-top: 20px;
+  margin-left: 30px;
+  margin-top: 10px;
+  width: 1px;
+}
+
+.wave-buttons {
+  float: left;
+  height: 160px;
+  margin-top: 30px;
   padding-left: 10px;
   width: 125px;
 }
 
-.wavedials {
+.wave-knobs {
+  float: left;
   height: 160px;
+  margin-left: 10px;
+  margin-top: 25px;
+  width: 80px;
+}
+
+.lfo-buttons {
+  float: left;
+  height: 160px;
+  margin-left: 20px;
+  margin-top: 30px;
+  padding-left: 10px;
   width: 125px;
+}
+
+.lfo-knobs {
+  float: left;
+  height: 160px;
+  margin-left: 10px;
+  margin-top: 25px;
+  width: 80px;
+}
+
+.env-knobs {
+  float: left;
+  height: 160px;
+  margin-left: 30px;
+  margin-top: 25px;
+  width: 80px;
+}
+
+.filt-buttons {
+  float: left;
+  height: 160px;
+  margin-left: 20px;
+  margin-top: 30px;
+  padding-left: 10px;
+  width: 125px;
+}
+
+.filt-knobs {
+  float: left;
+  height: 160px;
+  margin-left: 10px;
+  margin-top: 25px;
+  width: 80px;
+}
+
+.knob-label {
+  color: #CCFFFF;
+  display: block;
+  font-size: 14px;
+  margin-bottom: -15px;
+  position: relative;
+  text-align: center;
+  top: -33px;
+  width: 100%;
 }
