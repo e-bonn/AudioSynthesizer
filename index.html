@@ -1,19 +1,84 @@
 <!DOCTYPE html>
 <html>
-<head lang="en">
-    <meta charset="UTF-8">
-    <title>Additive Synthesizer</title>
-    <link rel="stylesheet" href="styles/main.css"/>
-    <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.1.1.min.js"></script>
-    <script src="js/filter.js"></script>
-    <script src="js/lfo.js"></script>
-    <script src="js/envelope.js"></script>
-    <script src="js/wave.js"></script>
-    <script src="js/synth.js"></script>
-    <script src="js/main.js"></script>
-</head>
-<body>
-<div id="content" class="container">
-</div>
-</body>
+  <head lang="en">
+      <meta charset="UTF-8">
+      <title>Additive Synthesizer</title>
+      <link rel="stylesheet" href="styles/main.css"/>
+      <link rel="stylesheet" href="styles/radiobuttons.css"/>
+      <link rel="shortcut icon" href="images/favicon.ico"/>
+      <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.1.1.min.js"></script>
+      <script src="https://cdn.rawgit.com/aterrien/jQuery-Knob/master/dist/jquery.knob.min.js"></script>
+      <script src="js/filter.js"></script>
+      <script src="js/lfo.js"></script>
+      <script src="js/envelope.js"></script>
+      <script src="js/wave.js"></script>
+      <script src="js/synth.js"></script>
+      <script src="js/main.js"></script>
+  </head>
+  <body>
+    <div id="board">
+      <fieldset class="oscillator">
+        <legend class="oscheading">&nbsp;Oscillator One&nbsp;</legend>
+        <div class="wavebuttons">
+          <ul>
+            <li>
+              <input type="radio" name="osc1-main" id="osc1-sine" checked="checked">
+              <label for="osc1-sine">Sine</label>
+              <div class="check"></div>
+            </li>
+            <li>
+              <input type="radio" name="osc1-main" id="osc1-tri">
+              <label for="osc1-tri">Triangle</label>
+              <div class="check"></div>
+            </li>
+            <li>
+              <input type="radio" name="osc1-main" id="osc1-squ">
+              <label for="osc1-squ">Square</label>
+              <div class="check"></div>
+            </li>
+            <li>
+              <input type="radio" name="osc1-main" id="osc1-saw">
+              <label for="osc1-saw">Sawtooth</label>
+              <div class="check"></div>
+            </li>
+          </ul>
+        </div>
+        <div class="wavedials">
+          <input type="text" value="50" id="osc1-vol">
+          <input type="text" value="0" id="osc1-phase">
+        </div>
+      </fieldset>
+      <fieldset class="oscillator">
+        <legend class="oscheading">&nbsp;Oscillator Two&nbsp;</legend>
+        <div class="wavebuttons">
+          <ul>
+            <li>
+              <input type="radio" name="osc2-main" id="osc2-sine">
+              <label for="osc2-sine">Sine</label>
+              <div class="check"></div>
+            </li>
+            <li>
+              <input type="radio" name="osc2-main" id="osc2-tri" checked="checked">
+              <label for="osc2-tri">Triangle</label>
+              <div class="check"></div>
+            </li>
+            <li>
+              <input type="radio" name="osc2-main" id="osc2-squ">
+              <label for="osc2-squ">Square</label>
+              <div class="check"></div>
+            </li>
+            <li>
+              <input type="radio" name="osc2-main" id="osc2-saw">
+              <label for="osc2-saw">Sawtooth</label>
+              <div class="check"></div>
+            </li>
+          </ul>
+        </div>
+        <div class="wavedials">
+          <input type="text" value="50" id="osc2-vol">
+          <input type="text" value="0" id="osc2-phase">
+        </div>
+      </fieldset>
+    </div>
+  </body>
 </html>

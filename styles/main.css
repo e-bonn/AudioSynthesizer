@@ -1,0 +1,49 @@
+body {
+  background-attachment: fixed;
+  background-image: url("../images/background.png");
+  background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.2) 100%), url("../images/background.png");
+  background-repeat: no-repeat;
+  font-family: Verdana, Geneva, sans-serif;
+  padding: 15px;
+}
+
+#board {
+  background-color: #1E1E1D;
+  border: 6px outset #1F2426;
+  border-radius: 5px;
+  height: 675px;
+  left:50%;
+  margin:0 auto;
+  margin-left:-700px;
+  margin-top:-332px;
+  padding: 0;
+  position: absolute;
+  top:50%;
+  width: 1400px;
+}
+
+.oscillator {
+  border: 5px outset #CCFFFF;
+  border-radius: 5px;
+  height: 200px;
+  width: 1000px;
+  margin-left: 20px;
+  margin-top: 20px;
+}
+
+.oscheading {
+  color: #CCFFFF;
+  font-size: 20px;
+}
+
+.wavebuttons {
+  height: 160px;
+  margin-top: 20px;
+  padding-left: 10px;
+  width: 125px;
+}
+
+.wavedials {
+  height: 160px;
+  width: 125px;
+}
