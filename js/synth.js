@@ -16,39 +16,39 @@ Synth.prototype.init = function() {
     "attack"    : 0,
     "decay"     : 0,
     "sustain"   : 0.5,
-    "release"   : 0.2
+    "release"   : 0.2,
   };
   this.envelopeParms[1] = {
     "attack"    : 0,
     "decay"     : 0,
     "sustain"   : 0.5,
-    "release"   : 0.2
+    "release"   : 0.2,
   };
 
   this.lfoParms = [];
   this.lfoParms[0] = {
     "freq"      : 5,
     "type"      : "sine",
-    "gain"      : 0.05
+    "gain"      : 0.05,
   };
   this.lfoParms[1] = {
     "freq"      : 5,
     "type"      : "sine",
-    "gain"      : 0.05
+    "gain"      : 0.05,
   };
 
   this.filterParms = [];
   this.filterParms[0] = {
-    "enabled"   : true,
-    "type"      : "lowpass",
+    "enabled"    : true,
+    "type"       : "lowpass",
     "cutoffFreq" : 1000,
-    "Q"         : 0
+    "Q"          : 0,
   };
   this.filterParms[1] = {
-    "enabled"   : true,
-    "type"      : "lowpass",
+    "enabled"    : true,
+    "type"       : "lowpass",
     "cutoffFreq" : 1000,
-    "Q"         : 0
+    "Q"          : 0,
   };
 
   this.reverbParms = {

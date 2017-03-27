@@ -4,22 +4,28 @@ body {
   background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.2) 100%), url("../images/background.png");
   background-repeat: no-repeat;
   font-family: Verdana, Geneva, sans-serif;
-  padding: 15px;
+  margin: 0;
+  padding: 0;
+  user-select: none;
 }
 
 #board {
   background-color: #1E1E1D;
   border: 6px outset #1F2426;
   border-radius: 5px;
-  height: 675px;
+  height: 710px;
   left:50%;
   margin:0 auto;
   margin-left:-700px;
-  margin-top:-332px;
+  margin-top:-360px;
   padding: 0;
   position: absolute;
   top:50%;
   width: 1400px;
+}
+
+#osc-group {
+  float: left;
 }
 
 .oscillator {
@@ -28,10 +34,37 @@ body {
   height: 200px;
   width: 1040px;
   margin-left: 20px;
-  margin-top: 20px;
+  margin-top: 10px;
 }
 
-.osc-heading {
+.effects {
+  border: 5px outset #CCFFFF;
+  border-radius: 5px;
+  float: left;
+  height: 435px;
+  width: 234px;
+  margin-left: 20px;
+  margin-top: 10px;
+}
+
+.oscilloscope {
+  border: 5px outset #CCFFFF;
+  border-radius: 5px;
+  height: 80px;
+  width: 1330px;
+  margin-left: 20px;
+  margin-top: 10px;
+}
+
+.keyboard {
+  float: left;
+  height: 100px;
+  width: 660px;
+  margin-left: 20px;
+  margin-top: 10px;
+}
+
+.fieldset-heading {
   color: #CCFFFF;
   font-size: 22px;
 }
@@ -59,6 +92,24 @@ body {
   margin-left: 30px;
   margin-top: 10px;
   width: 1px;
+}
+
+.small-vertical-line {
+  background-color: #CCFFFF;
+  float: left;
+  height: 90px;
+  margin-left: 25px;
+  margin-top: 15px;
+  width: 1px;
+}
+
+.horizontal-line {
+  background-color: #CCFFFF;
+  float: left;
+  height: 1px;
+  margin-left: 10px;
+  margin-top: 30px;
+  width: 160px;
 }
 
 .wave-buttons {
@@ -115,6 +166,15 @@ body {
   float: left;
   height: 160px;
   margin-left: 10px;
+  margin-top: 25px;
+  width: 80px;
+}
+
+.key-knobs {
+  float: left;
+  height: 100px;
+  margin-left: 10px;
+  margin-right: 10px;
   margin-top: 25px;
   width: 80px;
 }

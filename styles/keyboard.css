@@ -1,0 +1,91 @@
+.keyset {
+  float: left;
+  margin-left: 20px;
+  margin-top: 5px;
+}
+
+.key {
+  cursor: pointer;
+  background: #FFFFFF;
+  border-radius: 0 0 7px 7px;
+  border-bottom-width: 2px;
+  border: 1px solid #000;
+  border-top: 2px solid #CCFFFF;
+  width: 75px;
+  height: 90px;
+
+  float: left;
+
+  z-index: 1;
+}
+
+.key:hover {
+  background: #FFFFFF;
+}
+
+.key:active {
+  background: linear-gradient(#FFFFFF, #CCFFFF);
+  height: 87px;
+}
+
+.key p {
+  color: #000000;
+  margin-top: 65px;
+  text-align: center;
+  width: 75px;
+  z-index: 3;
+}
+
+.black-key {
+  cursor: pointer;
+  width: 60px;
+  height: 50px;
+  background: #000;
+  display: inline-block;
+  position: absolute;
+  border-top: 2px solid #CCFFFF;
+  border-radius: 0 0 5px 5px;
+  z-index: 2;
+}
+
+.black-key:active {
+  height: 47px;
+  background: linear-gradient(#000000, #009999);
+}
+
+.black-key p {
+  color: #FFFFFF;
+  margin-top: 25px;
+  text-align: center;
+  user-select: none;
+  width: 60px;
+  z-index: 3;
+}
+
+#c-key1, #c-key2 {
+  border-left-width: 2px;
+}
+
+#b-key1, #b-key2 {
+  border-right-width: 2px;
+}
+
+#db-key1, #db-key2 {
+  margin-left: -490px;
+}
+
+#eb-key1, #eb-key2 {
+  margin-left: -415px;
+}
+
+#gb-key1, #gb-key2 {
+  margin-left: -260px;
+}
+
+#ab-key1, #ab-key2 {
+  margin-left: -185px;
+}
+
+#bb-key1, #bb-key2 {
+  margin-left: -110px;
+}

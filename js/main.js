@@ -46,7 +46,7 @@ var initKnobs = function() {
     'max'         : 100,
     'min'         : 0,
     'step'        : 1,
-    'width'       : 80
+    'width'       : 80,
   });
   $(".knobs").prop('readonly', true);
 
@@ -54,7 +54,7 @@ var initKnobs = function() {
     'configure',
     {
       'max' : 25,
-      'min' : 1
+      'min' : 1,
     }
   );
 
@@ -64,6 +64,14 @@ var initKnobs = function() {
       'max'  : 2,
       'min'  : 0,
       'step' : 0.1,
+    }
+  );
+
+  $(".oct-knobs").trigger(
+    'configure',
+    {
+      'max'  : 8,
+      'min'  : 1,
     }
   );
 }
