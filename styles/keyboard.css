@@ -5,17 +5,16 @@
 }
 
 .key {
-  cursor: pointer;
+
   background: #FFFFFF;
-  border-radius: 0 0 7px 7px;
-  border-bottom-width: 2px;
   border: 1px solid #000;
+  border-bottom-width: 2px;
+  border-radius: 0 0 7px 7px;
   border-top: 2px solid #CCFFFF;
-  width: 75px;
-  height: 90px;
-
+  cursor: pointer;
   float: left;
-
+  height: 90px;
+  width: 75px;
   z-index: 1;
 }
 
@@ -37,20 +36,20 @@
 }
 
 .black-key {
-  cursor: pointer;
-  width: 60px;
-  height: 50px;
-  background: #000;
-  display: inline-block;
-  position: absolute;
-  border-top: 2px solid #CCFFFF;
+  background: #000000;
   border-radius: 0 0 5px 5px;
+  border-top: 2px solid #CCFFFF;
+  cursor: pointer;
+  display: inline-block;
+  height: 50px;
+  position: absolute;
+  width: 60px;
   z-index: 2;
 }
 
 .black-key:active {
-  height: 47px;
   background: linear-gradient(#000000, #009999);
+  height: 47px;
 }
 
 .black-key p {

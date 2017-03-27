@@ -67,6 +67,13 @@ var initKnobs = function() {
     }
   );
 
+  $("#rev-dec-knob").trigger(
+    'configure',
+    {
+      'max'  : 4,
+    }
+  );
+
   $(".oct-knobs").trigger(
     'configure',
     {

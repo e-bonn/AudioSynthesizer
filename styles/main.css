@@ -77,6 +77,15 @@ body {
   text-align: center;
 }
 
+.effects-sec-heading {
+  color: #CCFFFF;
+  font-size: 18px;
+  margin-top: 15px;
+  position: absolute;
+  text-align: center;
+  width: 234px;
+}
+
 #big-heading {
   width: 275px;
 }
@@ -105,11 +114,44 @@ body {
 
 .horizontal-line {
   background-color: #CCFFFF;
-  float: left;
   height: 1px;
-  margin-left: 10px;
+  margin-left: 20px;
+  margin-top: 60px;
+  width: 194px;
+}
+
+.delay-block {
+  display: block;
+  height: 120px;
+  margin: 25px auto 0 auto;
+}
+
+.delay-knobs {
+  float: left;
+  height: 80px;
+  margin-left: 77px;
+  margin-top: 65px;
+}
+
+.rev-block {
+  display: block;
+  float: left;
+  height: 120px;
+  margin: 15px auto 0 auto;
+}
+
+.rev-buttons {
+  float: left;
+  height: 20px;
+  margin-left: 15px;
+  margin-top: 60px;
+}
+
+.rev-knobs {
+  float: left;
+  height: 80px;
+  margin-left: 25px;
   margin-top: 30px;
-  width: 160px;
 }
 
 .wave-buttons {

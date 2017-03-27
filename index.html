@@ -248,7 +248,39 @@
       </div>
       <fieldset class="effects">
         <legend class="fieldset-heading">&nbsp;Effects&nbsp;</legend>
-
+        <div class="delay-block">
+          <label class="effects-sec-heading">Digital Delay</label>
+          <div class="delay-knobs">
+            <input type="text" value="0" class="knobs time-knobs" id="delay-knob">
+            <label class="knob-label">Delay Time</label>
+          </div>
+        </div>
+        <div class="horizontal-line"></div>
+        <div class="rev-block">
+          <label class="effects-sec-heading">Convolution Reverb</label>
+          <div class="rev-buttons">
+            <ul>
+              <li class="rev-button">
+                <input type="radio" name="osc-rev" id="osc-rev-on">
+                <label for="osc-rev-on">On</label>
+                <div class="check"></div>
+              </li>
+              <li class="rev-button">
+                <input type="radio" name="osc-rev" id="osc-rev-off" checked="checked">
+                <label for="osc-rev-off">Off</label>
+                <div class="check"></div>
+              </li>
+            </ul>
+          </div>
+          <div class="rev-knobs">
+            <input type="text" value="0" class="knobs time-knobs" id="rev-dur-knob">
+            <label class="knob-label">Duration</label>
+          </div>
+          <div class="rev-knobs">
+            <input type="text" value="0" class="knobs time-knobs" id="rev-dec-knob">
+            <label class="knob-label">Decay</label>
+          </div>
+        </div>
       </fieldset>
       <div class="keyboard">
         <div class="key-knobs">
