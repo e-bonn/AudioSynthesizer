@@ -7,12 +7,25 @@ Wave.prototype.init = function(type) {
   this.im = [];
   this.type = type;
 
+  this.oldShift = 0;
+
   this.setWaveformTo(type);
 }
 
 // k is the rotation value in radians
 Wave.prototype.shiftPhase = function(k) {
   var shiftVal = 2 * Math.PI * k;
+
+  // Rotate clockwise back to the original position
+  // Since k is an abs rotation and not a delta
+  // | cos(theta)     sin(theta) |
+  // | -sin(theta)    cos(theta) |
+  if(this.oldShift != 0) {
+    for (var i = 1; i < this.im.length; i++) {
+      this.real[i] = this.real[i]*Math.cos(shiftVal) + this.im[i]*Math.sin(shiftVal);
+      this.im[i] = -this.real[i]*Math.sin(shiftVal) + this.im[i]*Math.cos(shiftVal);
+    }
+  }
 
   // A Phase Shift is a counter-clockwise rotation on real-imaginary plane
   // This is a simple Euler rotation in 2 dimensions, using a rotation matrix:
@@ -22,6 +35,8 @@ Wave.prototype.shiftPhase = function(k) {
     this.real[i] = this.real[i]*Math.cos(shiftVal) - this.im[i]*Math.sin(shiftVal);
     this.im[i] = this.real[i]*Math.sin(shiftVal) + this.im[i]*Math.cos(shiftVal);
   }
+
+  this.oldShift = shiftVal;
 }
 
 Wave.prototype.setWaveformTo = function(type) {
