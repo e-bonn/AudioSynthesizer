@@ -119,7 +119,7 @@ var initButtons = function(mySynth) {
         case 'osc-rev-on':
           mySynth.setReverbEnabled(true);
           break;
-        case 'osc2-rev-off':
+        case 'osc-rev-off':
           mySynth.setReverbEnabled(false);
           break;
       }
