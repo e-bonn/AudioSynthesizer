@@ -11,6 +11,7 @@ var initKnobs = function(mySynth) {
     'step'        : 1,
     'width'       : 80,
   });
+  $('.knobs').prop('step', 0);
   $('.knobs').prop('readonly', true);
   $('.knobs').css('user-select', 'none');
   $('.knobs').css('-moz-user-select', 'none');
@@ -236,20 +237,6 @@ var initKnobs = function(mySynth) {
     'configure',
     {
       'change' : function(v) { mySynth.setReverbDecay(Math.round(v * 10) / 10); }
-    }
-  );
-
-  $('#key1-knob').trigger(
-    'configure',
-    {
-      'change' : function(v) { mySynth.setOctave(0, Math.round(v)); }
-    }
-  );
-
-  $('#key2-knob').trigger(
-    'configure',
-    {
-      'change' : function(v) { mySynth.setOctave(1, Math.round(v)); }
     }
   );
 }

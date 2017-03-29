@@ -18,10 +18,15 @@
 }
 
 .key:hover {
-  background: #FFFFFF;
+  background: #EEFFFF;
 }
 
 .key:active {
+  background: linear-gradient(#FFFFFF, #CCFFFF);
+  height: 87px;
+}
+
+.key.activate {
   background: linear-gradient(#FFFFFF, #CCFFFF);
   height: 87px;
 }
@@ -46,7 +51,16 @@
   z-index: 2;
 }
 
+.black-key:hover {
+  background: #002222;
+}
+
 .black-key:active {
+  background: linear-gradient(#000000, #009999);
+  height: 47px;
+}
+
+.black-key.activate {
   background: linear-gradient(#000000, #009999);
   height: 47px;
 }
@@ -74,6 +88,10 @@
   margin-top: 52px;
 }
 
+.key.activate #actual-key {
+  margin-top: 52px;
+}
+
 #actual-black-key {
   color: #009999;
   font-size: 10px;
@@ -85,6 +103,10 @@
 }
 
 .black-key:active #actual-black-key {
+  margin-top: 12px;
+}
+
+.black-key.activate #actual-black-key {
   margin-top: 12px;
 }
 

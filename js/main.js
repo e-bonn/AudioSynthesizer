@@ -14,8 +14,10 @@ document.addEventListener("DOMContentLoaded", function(event) {
 });
 
 document.addEventListener("keydown", function(event) {
+  console.log(event);
   var charCode = event.keyCode || event.which;
   var freq = mySynth.keyboard(charCode);
+  activateKey(charCode);
 
   if (freq != 0) {
     mySynth.playSound(freq);
@@ -25,6 +27,7 @@ document.addEventListener("keydown", function(event) {
 document.addEventListener("keyup", function(event) {
   var charCode = event.keyCode || event.which;
   var freq = mySynth.keyboard(charCode);
+  deactivateKey(charCode);
 
   if (freq != 0) {
     mySynth.stopSound(freq);
