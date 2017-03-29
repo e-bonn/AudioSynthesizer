@@ -1,3 +1,4 @@
+var heldKeys = {};
 (function() {
 
 var mySynth = null;
@@ -14,12 +15,14 @@ document.addEventListener("DOMContentLoaded", function(event) {
 });
 
 document.addEventListener("keydown", function(event) {
-  console.log(event);
   var charCode = event.keyCode || event.which;
   var freq = mySynth.keyboard(charCode);
-  activateKey(charCode);
-
-  if (freq != 0) {
+  if (freq != 0 && heldKeys[charCode] !== true) {
+    $('.oscillator').addClass('disable');
+    $('.effects').addClass('disable');
+    $('.key-knobs').addClass('disable');
+    heldKeys[charCode] = true;
+    activateKey(charCode);
     mySynth.playSound(freq);
   }
 });
@@ -27,12 +30,26 @@ document.addEventListener("keydown", function(event) {
 document.addEventListener("keyup", function(event) {
   var charCode = event.keyCode || event.which;
   var freq = mySynth.keyboard(charCode);
-  deactivateKey(charCode);
-
   if (freq != 0) {
-    mySynth.stopSound(freq);
+    delete heldKeys[charCode];
+    if (heldKeys[charCode] === undefined && heldKeys[charCode + 500] === undefined) {
+      deactivateKey(charCode);
+      mySynth.stopSound(freq);
+      if (Object.keys(heldKeys).length === 0) {
+        $('.oscillator').removeClass('disable');
+        $('.effects').removeClass('disable');
+        $('.key-knobs').removeClass('disable');
+      }
+    }
   }
 });
+
+function isEmpty(map) {
+   for(var key in obj) {
+      return !obj.hasOwnProperty(key);
+   }
+   return true;
+}
 
 var draw = function() {
   for (var analyser in mySynth.analysers) {

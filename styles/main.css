@@ -12,6 +12,11 @@ body {
   -webkit-user-select: none;
 }
 
+.disable {
+  opacity: 0.6;
+  pointer-events: none;
+}
+
 #board {
   background-color: #1E1E1D;
   border: 6px outset #1F2426;

@@ -13,164 +13,165 @@ var initKeyboard = function(mySynth) {
     }
   );
 
-  $('#c-key1').on(
-    'click',
+  $('.key, .black-key').on(
+    'mousedown',
     function() {
+      var charCode = keyIdToCharCode(this.id);
+      if (charCode !== 0) {
+        var freq = mySynth.keyboard(charCode);
+        if (freq != 0) {
+          $('.oscillator').addClass('disable');
+          $('.effects').addClass('disable');
+          $('.key-knobs').addClass('disable');
+          heldKeys[charCode + 500] = true;
+          activateKey(charCode);
+          mySynth.playSound(freq);
+        }
+      }
+    }
+  );
 
+  $('.key, .black-key').on(
+    'mouseup mouseleave',
+    function(e) {
+      var charCode = keyIdToCharCode(this.id);
+      if (charCode !== 0) {
+        delete heldKeys[charCode + 500];
+        if (heldKeys[charCode] === undefined && heldKeys[charCode + 500] === undefined) {
+          deactivateKey(charCode);
+          var freq = mySynth.keyboard(charCode);
+          mySynth.stopSound(freq);
+          if (Object.keys(heldKeys).length === 0) {
+            $('.oscillator').removeClass('disable');
+            $('.effects').removeClass('disable');
+            $('.key-knobs').removeClass('disable');
+          }
+        }
+      }
     }
   );
 }
 
-var activateKey = function(charCode) {
+var keyIdToCharCode = function(keyId) {
+  switch(keyId) {
+    case 'c-key1':
+      return 49;
+    case 'db-key1':
+      return 50;
+    case 'd-key1':
+      return 51;
+    case 'eb-key1':
+      return 52;
+    case 'e-key1':
+      return 53;
+    case 'f-key1':
+      return 54;
+    case 'gb-key1':
+      return 55;
+    case 'g-key1':
+      return 56;
+    case 'ab-key1':
+      return 57;
+    case 'a-key1':
+      return 48;
+    case 'bb-key1':
+      return 189;
+    case 'b-key1':
+      return 187;
+    case 'c-key2':
+      return 81;
+    case 'db-key2':
+      return 87;
+    case 'd-key2':
+      return 69;
+    case 'eb-key2':
+      return 82;
+    case 'e-key2':
+      return 84;
+    case 'f-key2':
+      return 89;
+    case 'gb-key2':
+      return 85;
+    case 'g-key2':
+      return 73;
+    case 'ab-key2':
+      return 79;
+    case 'a-key2':
+      return 80;
+    case 'bb-key2':
+      return 219;
+    case 'b-key2':
+      return 221;
+    default:
+      return 0;
+  }
+}
+
+var charCodeToKeyId = function(charCode) {
   switch(charCode) {
     case 49: // Key 1
-      $("#c-key1").addClass('activate');
-      break;
+      return 'c-key1';
     case 50: // Key 2
-      $("#db-key1").addClass('activate');
-      break;
+      return 'db-key1';
     case 51: // Key 3
-      $("#d-key1").addClass('activate');
-      break;
+      return 'd-key1';
     case 52: // Key 4
-      $("#eb-key1").addClass('activate');
-      break;
+      return 'eb-key1';
     case 53: // Key 5
-      $("#e-key1").addClass('activate');
-      break;
+      return 'e-key1';
     case 54: // Key 6
-      $("#f-key1").addClass('activate');
-      break;
+      return 'f-key1';
     case 55: // Key 7
-      $("#gb-key1").addClass('activate');
-      break;
+      return 'gb-key1';
     case 56: // Key 8
-      $("#g-key1").addClass('activate');
-      break;
+      return 'g-key1';
     case 57: // Key 9
-      $("#ab-key1").addClass('activate');
-      break;
+      return 'ab-key1';
     case 48: // Key 0
-      $("#a-key1").addClass('activate');
-      break;
+      return 'a-key1';
     case 189: // Key -
-      $("#bb-key1").addClass('activate');
-      break;
+      return 'bb-key1';
     case 187: // Key =
-      $("#b-key1").addClass('activate');
-      break;
+      return 'b-key1';
     case 81: // Key Q
-      $("#c-key2").addClass('activate');
-      break;
+      return 'c-key2';
     case 87: // Key W
-      $("#db-key2").addClass('activate');
-      break;
+      return 'db-key2';
     case 69: // Key E
-      $("#d-key2").addClass('activate');
-      break;
+      return 'd-key2';
     case 82: // Key R
-      $("#eb-key2").addClass('activate');
-      break;
+      return 'eb-key2';
     case 84: // Key T
-      $("#e-key2").addClass('activate');
-      break;
+      return 'e-key2';
     case 89: // Key Y
-      $("#f-key2").addClass('activate');
-      break;
+      return 'f-key2';
     case 85: // Key U
-      $("#gb-key2").addClass('activate');
-      break;
+      return 'gb-key2';
     case 73: // Key I
-      $("#g-key2").addClass('activate');
-      break;
+      return 'g-key2';
     case 79: // Key O
-      $("#ab-key2").addClass('activate');
-      break;
+      return 'ab-key2';
     case 80: // Key P
-      $("#a-key2").addClass('activate');
-      break;
+      return 'a-key2';
     case 219: // Key [
-      $("#bb-key2").addClass('activate');
-      break;
+      return 'bb-key2';
     case 221: // Key ]
-      $("#b-key2").addClass('activate');
-      break;
+      return 'b-key2';
+    default:
+      return '';
+  }
+}
+
+var activateKey = function(charCode) {
+  var keyId = charCodeToKeyId(charCode);
+  if (keyId !== '') {
+    $('#' + keyId).addClass('activate');
   }
 }
 
 var deactivateKey = function(charCode) {
-  switch(charCode) {
-    case 49: // Key 1
-      $("#c-key1").removeClass('activate');
-      break;
-    case 50: // Key 2
-      $("#db-key1").removeClass('activate');
-      break;
-    case 51: // Key 3
-      $("#d-key1").removeClass('activate');
-      break;
-    case 52: // Key 4
-      $("#eb-key1").removeClass('activate');
-      break;
-    case 53: // Key 5
-      $("#e-key1").removeClass('activate');
-      break;
-    case 54: // Key 6
-      $("#f-key1").removeClass('activate');
-      break;
-    case 55: // Key 7
-      $("#gb-key1").removeClass('activate');
-      break;
-    case 56: // Key 8
-      $("#g-key1").removeClass('activate');
-      break;
-    case 57: // Key 9
-      $("#ab-key1").removeClass('activate');
-      break;
-    case 48: // Key 0
-      $("#a-key1").removeClass('activate');
-      break;
-    case 189: // Key -
-      $("#bb-key1").removeClass('activate');
-      break;
-    case 187: // Key =
-      $("#b-key1").removeClass('activate');
-      break;
-    case 81: // Key Q
-      $("#c-key2").removeClass('activate');
-      break;
-    case 87: // Key W
-      $("#db-key2").removeClass('activate');
-      break;
-    case 69: // Key E
-      $("#d-key2").removeClass('activate');
-      break;
-    case 82: // Key R
-      $("#eb-key2").removeClass('activate');
-      break;
-    case 84: // Key T
-      $("#e-key2").removeClass('activate');
-      break;
-    case 89: // Key Y
-      $("#f-key2").removeClass('activate');
-      break;
-    case 85: // Key U
-      $("#gb-key2").removeClass('activate');
-      break;
-    case 73: // Key I
-      $("#g-key2").removeClass('activate');
-      break;
-    case 79: // Key O
-      $("#ab-key2").removeClass('activate');
-      break;
-    case 80: // Key P
-      $("#a-key2").removeClass('activate');
-      break;
-    case 219: // Key [
-      $("#bb-key2").removeClass('activate');
-      break;
-    case 221: // Key ]
-      $("#b-key2").removeClass('activate');
-      break;
+  var keyId = charCodeToKeyId(charCode);
+  if (keyId !== '') {
+    $('#' + keyId).removeClass('activate');
   }
 }

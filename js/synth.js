@@ -204,10 +204,18 @@ Synth.prototype.setDelayTime = function(delayTime) {
 
 Synth.prototype.setReverbEnabled = function(enabled) {
   this.reverbParms.enabled = enabled;
+  if (this.reverbParms.duration === 0) {
+    this.reverbParms.duration = 1;
+    $('#rev-dur-knob').val(1).trigger('change');
+  }
 }
 
 Synth.prototype.setReverbDuration = function(duration) {
   this.reverbParms.duration = duration;
+  if (duration === 0) {
+    this.reverbParms.enabled = false;
+    $("#osc-rev-off").prop('checked', 'checked');
+  }
 }
 
 Synth.prototype.setReverbDecay = function(decay) {

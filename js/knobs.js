@@ -11,7 +11,8 @@ var initKnobs = function(mySynth) {
     'step'        : 1,
     'width'       : 80,
   });
-  $('.knobs').prop('step', 0);
+  $('.knobs').unbind('keydown');
+  $('.knobs').unbind('keyup');
   $('.knobs').prop('readonly', true);
   $('.knobs').css('user-select', 'none');
   $('.knobs').css('-moz-user-select', 'none');
@@ -37,9 +38,10 @@ var initKnobs = function(mySynth) {
   $('.time-knobs').trigger(
     'configure',
     {
-      'max'  : 2,
-      'min'  : 0,
-      'step' : 0.1,
+      'format' : function(v) { return Math.round(v*10) / 10; },
+      'max'    : 2,
+      'min'    : 0,
+      'step'   : 0.1,
     }
   );
 
@@ -82,161 +84,161 @@ var initKnobs = function(mySynth) {
   $('#osc1-main-vol').trigger(
     'configure',
     {
-      'change' : function(v) { mySynth.setVolume(0, Math.round(v) / 100); }
+      'change' : function(v) { mySynth.setVolume(0, Math.round(v) / 100); },
     }
   );
 
   $('#osc2-main-vol').trigger(
     'configure',
     {
-      'change' : function(v) { mySynth.setVolume(1, Math.round(v) / 100); }
+      'change' : function(v) { mySynth.setVolume(1, Math.round(v) / 100); },
     }
   );
 
   $('#osc1-main-phase').trigger(
     'configure',
     {
-      'change' : function(v) { mySynth.setPhaseShift(0, Math.round(v)); }
+      'change' : function(v) { mySynth.setPhaseShift(0, Math.round(v)); },
     }
   );
 
   $('#osc2-main-phase').trigger(
     'configure',
     {
-      'change' : function(v) { mySynth.setPhaseShift(1, Math.round(v)); }
+      'change' : function(v) { mySynth.setPhaseShift(1, Math.round(v)); },
     }
   );
 
   $('#osc1-lfo-vol').trigger(
     'configure',
     {
-      'change' : function(v) { mySynth.setLfoGain(0, Math.round(v) / 100); }
+      'change' : function(v) { mySynth.setLfoGain(0, Math.round(v) / 100); },
     }
   );
 
   $('#osc2-lfo-vol').trigger(
     'configure',
     {
-      'change' : function(v) { mySynth.setLfoGain(1, Math.round(v) / 100); }
+      'change' : function(v) { mySynth.setLfoGain(1, Math.round(v) / 100); },
     }
   );
 
   $('#osc1-lfo-freq').trigger(
     'configure',
     {
-      'change' : function(v) { mySynth.setLfoFreq(0, Math.round(v)); }
+      'change' : function(v) { mySynth.setLfoFreq(0, Math.round(v)); },
     }
   );
 
   $('#osc2-lfo-freq').trigger(
     'configure',
     {
-      'change' : function(v) { mySynth.setLfoFreq(1, Math.round(v)); }
+      'change' : function(v) { mySynth.setLfoFreq(1, Math.round(v)); },
     }
   );
 
   $('#osc1-env-att').trigger(
     'configure',
     {
-      'change' : function(v) { mySynth.setAttack(0, Math.round(v * 10) / 10); }
+      'change' : function(v) { mySynth.setAttack(0, Math.round(v * 10) / 10); },
     }
   );
 
   $('#osc2-env-att').trigger(
     'configure',
     {
-      'change' : function(v) { mySynth.setAttack(1, Math.round(v * 10) / 10); }
+      'change' : function(v) { mySynth.setAttack(1, Math.round(v * 10) / 10); },
     }
   );
 
   $('#osc1-env-dec').trigger(
     'configure',
     {
-      'change' : function(v) { mySynth.setDecay(0, Math.round(v * 10) / 10); }
+      'change' : function(v) { mySynth.setDecay(0, Math.round(v * 10) / 10); },
     }
   );
 
   $('#osc2-env-dec').trigger(
     'configure',
     {
-      'change' : function(v) { mySynth.setDecay(1, Math.round(v * 10) / 10); }
+      'change' : function(v) { mySynth.setDecay(1, Math.round(v * 10) / 10); },
     }
   );
 
   $('#osc1-env-rel').trigger(
     'configure',
     {
-      'change' : function(v) { mySynth.setRelease(0, Math.round(v * 10) / 10); }
+      'change' : function(v) { mySynth.setRelease(0, Math.round(v * 10) / 10); },
     }
   );
 
   $('#osc2-env-rel').trigger(
     'configure',
     {
-      'change' : function(v) { mySynth.setRelease(1, Math.round(v * 10) / 10); }
+      'change' : function(v) { mySynth.setRelease(1, Math.round(v * 10) / 10); },
     }
   );
 
   $('#osc1-env-sus').trigger(
     'configure',
     {
-      'change' : function(v) { mySynth.setSustain(0, Math.round(v) / 100); }
+      'change' : function(v) { mySynth.setSustain(0, Math.round(v) / 100); },
     }
   );
 
   $('#osc2-env-sus').trigger(
     'configure',
     {
-      'change' : function(v) { mySynth.setSustain(1, Math.round(v) / 100); }
+      'change' : function(v) { mySynth.setSustain(1, Math.round(v) / 100); },
     }
   );
 
   $('#osc1-filt-cut').trigger(
     'configure',
     {
-      'change' : function(v) { mySynth.setFilterCutoff(0, Math.round(v)); }
+      'change' : function(v) { mySynth.setFilterCutoff(0, Math.round(v)); },
     }
   );
 
   $('#osc2-filt-cut').trigger(
     'configure',
     {
-      'change' : function(v) { mySynth.setFilterCutoff(1, Math.round(v)); }
+      'change' : function(v) { mySynth.setFilterCutoff(1, Math.round(v)); },
     }
   );
 
   $('#osc1-filt-q').trigger(
     'configure',
     {
-      'change' : function(v) { mySynth.setFilterQ(0, Math.round(v)); }
+      'change' : function(v) { mySynth.setFilterQ(0, Math.round(v)); },
     }
   );
 
   $('#osc2-filt-q').trigger(
     'configure',
     {
-      'change' : function(v) { mySynth.setFilterQ(1, Math.round(v)); }
+      'change' : function(v) { mySynth.setFilterQ(1, Math.round(v)); },
     }
   );
 
   $('#delay-knob').trigger(
     'configure',
     {
-      'change' : function(v) { mySynth.setDelayTime(Math.round(v * 10) / 10); }
+      'change' : function(v) { mySynth.setDelayTime(Math.round(v * 10) / 10); },
     }
   );
 
   $('#rev-dur-knob').trigger(
     'configure',
     {
-      'change' : function(v) { mySynth.setReverbDuration(Math.round(v * 10) / 10); }
+      'change' : function(v) { mySynth.setReverbDuration(Math.round(v * 10) / 10); },
     }
   );
 
   $('#rev-dec-knob').trigger(
     'configure',
     {
-      'change' : function(v) { mySynth.setReverbDecay(Math.round(v * 10) / 10); }
+      'change' : function(v) { mySynth.setReverbDecay(Math.round(v * 10) / 10); },
     }
   );
 }
