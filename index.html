@@ -14,6 +14,9 @@
     <script src="js/envelope.js"></script>
     <script src="js/wave.js"></script>
     <script src="js/synth.js"></script>
+    <script src="js/radiobuttons.js"></script>
+    <script src="js/knobs.js"></script>
+    <script src="js/keyboard.js"></script>
     <script src="js/main.js"></script>
   </head>
   <body>
@@ -52,7 +55,7 @@
           <div class="wave-knobs">
             <input type="text" value="50" class="knobs" id="osc1-main-vol">
             <label class="knob-label">Volume</label>
-            <input type="text" value="0" class="knobs" id="osc1-main-phase">
+            <input type="text" value="0" class="knobs shift-knobs" id="osc1-main-phase">
             <label class="knob-label">Phase Shift</label>
           </div>
           <div class="vertical-line"></div>
@@ -139,12 +142,12 @@
           <div class="wave-buttons">
             <ul>
               <li>
-                <input type="radio" name="osc2-main" id="osc2-main-sine" checked="checked">
+                <input type="radio" name="osc2-main" id="osc2-main-sine">
                 <label for="osc2-main-sine">Sine</label>
                 <div class="check"></div>
               </li>
               <li>
-                <input type="radio" name="osc2-main" id="osc2-main-squ">
+                <input type="radio" name="osc2-main" id="osc2-main-squ"  checked="checked">
                 <label for="osc2-main-squ">Square</label>
                 <div class="check"></div>
               </li>
@@ -163,7 +166,7 @@
           <div class="wave-knobs">
             <input type="text" value="50" class="knobs" id="osc2-main-vol">
             <label class="knob-label">Volume</label>
-            <input type="text" value="0" class="knobs" id="osc2-main-phase">
+            <input type="text" value="180" class="knobs shift-knobs" id="osc2-main-phase">
             <label class="knob-label">Phase Shift</label>
           </div>
           <div class="vertical-line"></div>
@@ -289,39 +292,51 @@
         </div>
         <div class="keyset">
           <div id="c-key1" class="key">
+            <p id="actual-key">1</p>
             <p>C</p>
           </div>
           <div id="d-key1" class="key">
+            <p id="actual-key">3</p>
             <p>D</p>
           </div>
           <div id="e-key1" class="key">
+            <p id="actual-key">5</p>
             <p>E</p>
           </div>
           <div id="f-key1" class="key">
+            <p id="actual-key">6</p>
             <p>F</p>
           </div>
           <div id="g-key1" class="key">
+            <p id="actual-key">8</p>
             <p>G</p>
           </div>
           <div id="a-key1" class="key">
+            <p id="actual-key">0</p>
             <p>A</p>
           </div>
           <div id="b-key1" class="key">
+            <p id="actual-key">=</p>
             <p>B</p>
           </div>
           <div id="db-key1" class="black-key">
+            <p id="actual-black-key">2</p>
             <p>D<small>b</small></p>
           </div>
           <div id="eb-key1" class="black-key">
+            <p id="actual-black-key">4</p>
             <p>E<small>b</small></p>
           </div>
           <div id="gb-key1" class="black-key">
+            <p id="actual-black-key">7</p>
             <p>G<small>b</small></p>
           </div>
           <div id="ab-key1" class="black-key">
+            <p id="actual-black-key">9</p>
             <p>A<small>b</small></p>
           </div>
           <div id="bb-key1" class="black-key">
+            <p id="actual-black-key">-</p>
             <p>B<small>b</small></p>
           </div>
         </div>
@@ -334,39 +349,51 @@
         </div>
         <div class="keyset">
           <div id="c-key2" class="key">
+            <p id="actual-key">Q</p>
             <p>C</p>
           </div>
           <div id="d-key2" class="key">
+            <p id="actual-key">E</p>
             <p>D</p>
           </div>
           <div id="e-key2" class="key">
+            <p id="actual-key">T</p>
             <p>E</p>
           </div>
           <div id="f-key2" class="key">
+            <p id="actual-key">Y</p>
             <p>F</p>
           </div>
           <div id="g-key2" class="key">
+            <p id="actual-key">I</p>
             <p>G</p>
           </div>
           <div id="a-key2" class="key">
+            <p id="actual-key">P</p>
             <p>A</p>
           </div>
           <div id="b-key2" class="key">
+            <p id="actual-key">]</p>
             <p>B</p>
           </div>
           <div id="db-key2" class="black-key">
+            <p id="actual-black-key">W</p>
             <p>D<small>b</small></p>
           </div>
           <div id="eb-key2" class="black-key">
+            <p id="actual-black-key">R</p>
             <p>E<small>b</small></p>
           </div>
           <div id="gb-key2" class="black-key">
+            <p id="actual-black-key">U</p>
             <p>G<small>b</small></p>
           </div>
           <div id="ab-key2" class="black-key">
+            <p id="actual-black-key">O</p>
             <p>A<small>b</small></p>
           </div>
           <div id="bb-key2" class="black-key">
+            <p id="actual-black-key">[</p>
             <p>B<small>b</small></p>
           </div>
         </div>

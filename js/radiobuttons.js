@@ -1,0 +1,3 @@
+var initButtons = function(mySynth) {
+
+}
