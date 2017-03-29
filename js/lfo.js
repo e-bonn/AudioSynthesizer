@@ -18,7 +18,7 @@ LFO.prototype.connect = function(parm) {
 }
 
 LFO.prototype.start = function(context) {
-  var wave = new Wave(this.type);
+  var wave = new Wave(this.type, 0);
   var contextWave = context.createPeriodicWave(wave.real, wave.im);
 
   this.osc = context.createOscillator();

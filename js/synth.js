@@ -159,7 +159,7 @@ Synth.prototype.setAttack = function(osc, attack) {
 }
 
 Synth.prototype.setDecay = function(osc, decay) {
-  this.envelopeParms[osc].decay = decay;
+  this.envelopeParms[osc].decay = attack;
 }
 
 Synth.prototype.setSustain = function(osc, sustain) {
