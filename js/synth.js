@@ -8,56 +8,54 @@ Synth.prototype.init = function() {
 
   this.waves = [];
   // Init to sine waves
-  this.waves[0] = new Wave("sine");
-  this.waves[1] = new Wave("square");
+  this.waves[0] = new Wave('sine', 0);
+  this.waves[1] = new Wave('square', 90);
 
   this.envelopeParms = [];
   this.envelopeParms[0] = {
-    "attack"    : 0,
-    "decay"     : 0,
-    "sustain"   : 0.5,
-    "release"   : 0.2,
+    'attack'  : 1,
+    'decay'   : 1,
+    'sustain' : 0.5,
+    'release' : 1,
   };
   this.envelopeParms[1] = {
-    "attack"    : 0,
-    "decay"     : 0,
-    "sustain"   : 0.5,
-    "release"   : 0.2,
+    'attack'  : 1,
+    'decay'   : 1,
+    'sustain' : 0.5,
+    'release' : 1,
   };
 
   this.lfoParms = [];
   this.lfoParms[0] = {
-    "freq"      : 5,
-    "type"      : "sine",
-    "gain"      : 0.05,
+    'freq' : 8,
+    'type' : 'sine',
+    'gain' : 0,
   };
   this.lfoParms[1] = {
-    "freq"      : 5,
-    "type"      : "sine",
-    "gain"      : 0.05,
+    'freq' : 16,
+    'type' : 'sawtooth',
+    'gain' : 0,
   };
 
   this.filterParms = [];
   this.filterParms[0] = {
-    "enabled"    : true,
-    "type"       : "lowpass",
-    "cutoffFreq" : 1000,
-    "Q"          : 0,
+    'type'       : 'none',
+    'cutoffFreq' : 0,
+    'Q'          : 0,
   };
   this.filterParms[1] = {
-    "enabled"    : true,
-    "type"       : "lowpass",
-    "cutoffFreq" : 1000,
-    "Q"          : 0,
+    'type'       : 'none',
+    'cutoffFreq' : 0,
+    'Q'          : 0,
   };
 
   this.reverbParms = {
-    "enabled"   : false,
-    "duration"  : 1,
-    "decay"     : 0,
+    'enabled'  : false,
+    'duration' : 0,
+    'decay'    : 0,
   };
 
-  this.delayTime = 0.1;
+  this.delayTime = 0;
 
   this.baseOctave = [
     32.7032,
@@ -76,8 +74,8 @@ Synth.prototype.init = function() {
 
   // Volumes for the gain nodes
   this.volumes = [];
-  this.volumes[0] = 0.1;
-  this.volumes[1] = 0.1;
+  this.volumes[0] = 0.5;
+  this.volumes[1] = 0.5;
 
   this.octaves = [];
   this.octaves[0] = 4;
@@ -144,43 +142,76 @@ Synth.prototype.keyboard = function(charCode) {
 }
 
 Synth.prototype.changeWaveform = function(osc, type) {
-  if (osc >= 0 && osc <= 1) {
-    this.waves[osc].setWaveformTo(type);
-  }
+  this.waves[osc].setWaveformTo(type);
+  this.waves[osc].setPhaseShift(this.waves[osc].phaseShift);
 }
 
 Synth.prototype.setVolume = function(osc, vol) {
   this.volumes[osc] = vol;
 }
 
-Synth.prototype.setPhaseShift = function(osc, k) {
-  this.waves[osc].setPhaseShift(k);
+Synth.prototype.setPhaseShift = function(osc, phaseShift) {
+  this.waves[osc].setPhaseShift(phaseShift);
 }
 
-Synth.prototype.setEnvelope = function(osc, envelopeParms) {
-  this.envelopeParms[osc] = envelopeParms;
+Synth.prototype.setAttack = function(osc, attack) {
+  this.envelopeParms[osc].attack = attack;
 }
 
-Synth.prototype.setLfo = function(osc, lfoParms) {
-  this.lfoParms[osc] = lfoParms;
+Synth.prototype.setDecay = function(osc, decay) {
+  this.envelopeParms[osc].decay = attack;
 }
 
-Synth.prototype.setFilter = function(osc, filterParms) {
-  if (osc >= 0 && osc <= 1) {
-    this.filterParms[osc] = filterParms;
-  }
+Synth.prototype.setSustain = function(osc, sustain) {
+  this.envelopeParms[osc].sustain = sustain;
+}
+
+Synth.prototype.setRelease = function(osc, release) {
+  this.envelopeParms[osc].release = release;
+}
+
+Synth.prototype.setLfoWave = function(osc, type) {
+  this.lfoParms[osc].type = type;
+}
+
+Synth.prototype.setLfoGain = function(osc, gain) {
+  this.lfoParms[osc].gain = gain;
+}
+
+Synth.prototype.setLfoFreq = function(osc, freq) {
+  this.lfoParms[osc].freq = freq;
+}
+
+Synth.prototype.setFilterType = function(osc, type) {
+  this.filterParms[osc].type = type;
+}
+
+Synth.prototype.setFilterCutoff = function(osc, cutoff) {
+  this.filterParms[osc].cutoffFreq = cutoff;
+}
+
+Synth.prototype.setFilterQ = function(osc, q) {
+  this.filterParms[osc].Q = q;
 }
 
 Synth.prototype.setOctave = function(keyboard, octave) {
   this.octaves[keyboard] = octave;
 }
 
-Synth.prototype.setReverb = function(reverbParms) {
-  this.reverbParms = reverbParms;
-}
-
 Synth.prototype.setDelayTime = function(delayTime) {
   this.delayTime = delayTime;
+}
+
+Synth.prototype.setReverbEnabled = function(enabled) {
+  this.reverbParms.enabled = enabled;
+}
+
+Synth.prototype.setReverbDuration = function(duration) {
+  this.reverbParms.duration = duration;
+}
+
+Synth.prototype.setReverbDecay = function(decay) {
+  this.reverbParms.decay = decay;
 }
 
 Synth.prototype.buildConvolver = function(convolver) {
@@ -257,12 +288,12 @@ Synth.prototype.getSoundData = function(f) {
 
     sound.filters = [];
     sound.filters[0] = new Filter(this.filterParms[0]);
-    if (sound.filters[0].enabled) {
+    if (sound.filters[0].type !== 'none') {
       sound.filters[0].connect(filterConnection, this.context);
     }
 
     sound.filters[1] = new Filter(this.filterParms[1]);
-    if (sound.filters[1].enabled) {
+    if (sound.filters[1].type !== 'none') {
       sound.filters[1].connect(filterConnection, this.context);
     }
   }
@@ -276,24 +307,24 @@ Synth.prototype.playSound = function(f) {
 
     // Play Oscillator 1
     sound.osc[0].connect(sound.gain[0]);
-    if (sound.filters[0].enabled) {
+    if (sound.filters[0].type !== 'none') {
       sound.gain[0].connect(sound.filters[0].filter);
       sound.filters[0].start();
-    } else if (!sound.filters[0].enabled && this.reverbParms.enabled) {
+    } else if (sound.filters[0].type === 'none' && this.reverbParms.enabled) {
       sound.gain[0].connect(sound.convolver);
-    } else if (!sound.filters[0].enabled && !this.reverbParms.enabled) {
+    } else if (sound.filters[0].type === 'none' && !this.reverbParms.enabled) {
       sound.gain[0].connect(sound.delay);
     }
     sound.osc[0].start();
 
     // Play Oscillator 2
     sound.osc[1].connect(sound.gain[1]);
-    if (sound.filters[1].enabled) {
+    if (sound.filters[1].type !== 'none') {
       sound.gain[1].connect(sound.filters[0].filter);
       sound.filters[1].start();
-    } else if (!sound.filters[1].enabled && this.reverbParms.enabled) {
+    } else if (sound.filters[1].type === 'none' && this.reverbParms.enabled) {
       sound.gain[1].connect(sound.convolver);
-    } else if (!sound.filters[1].enabled && !this.reverbParms.enabled) {
+    } else if (sound.filters[1].type === 'none' && !this.reverbParms.enabled) {
       sound.gain[1].connect(sound.delay);
     }
     sound.osc[1].start();

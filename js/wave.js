@@ -1,21 +1,21 @@
-function Wave(type) {
-  this.init(type);
+function Wave(type, phaseShift) {
+  this.init(type, phaseShift);
 }
 
-Wave.prototype.init = function(type) {
+Wave.prototype.init = function(type, phaseShift) {
   this.real = [];
   this.im = [];
   this.ogReal = null;
   this.ogIm = null;
-  this.type = type;
 
   this.setWaveformTo(type);
+  this.setPhaseShift(phaseShift);
 }
 
 // k is the rotation value in radians
-Wave.prototype.setPhaseShift = function(k) {
-  var shiftVal = 2 * Math.PI * k;
-
+Wave.prototype.setPhaseShift = function(phaseShift) {
+  var shiftVal = (phaseShift * Math.PI) / 180;
+  this.phaseShift = phaseShift;
   // A Phase Shift is a counter-clockwise rotation on real-imaginary plane
   // This is a simple Euler rotation in 2 dimensions, using a rotation matrix:
   // | cos(theta)     -sin(theta) |
@@ -32,20 +32,24 @@ Wave.prototype.setWaveformTo = function(type) {
   this.type = type;
 
   switch(type) {
-    case "sine":
+    case 'sine':
       this.im[1] = 1.0;
-    case "square":
+      break;
+    case 'square':
       for (var k = 1; k < this.im.length; k += 2) {
           this.im[k] = 4.0/(Math.PI*k);
       }
-    case "triangle":
+      break;
+    case 'triangle':
       for (var k = 1; k < this.im.length; k += 2) {
           this.im[k] = (8.0*Math.pow(-1,(k-1)/2))/(Math.pow(Math.PI,2)*Math.pow(k,2));
       }
-    case "sawtooth":
+      break;
+    case 'sawtooth':
       for (var k = 1; k < this.im.length; k++) {
           this.im[k] = (2.0*Math.pow(-1,k))/(Math.PI*k);
       }
+      break;
   }
 
   this.ogReal = this.real.slice();
