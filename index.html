@@ -17,13 +17,18 @@
     <script src="js/radiobuttons.js"></script>
     <script src="js/knobs.js"></script>
     <script src="js/keyboard.js"></script>
+    <script src="js/graphs.js"></script>
     <script src="js/main.js"></script>
   </head>
   <body>
     <div id="board">
-      <fieldset class="oscilloscope">
+      <fieldset class="graphs">
         <legend class="fieldset-heading">&nbsp;Oscilloscope&nbsp;</legend>
-
+        <canvas id='oscilloscope' width=637 height=55></canvas>
+      </fieldset>
+      <fieldset class="graphs">
+        <legend class="fieldset-heading">&nbsp;Frequency Spectrum&nbsp;</legend>
+        <canvas id='spectrum' width=637 height=55></canvas>
       </fieldset>
       <div id="osc-group">
         <fieldset class="oscillator">

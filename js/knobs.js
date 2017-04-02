@@ -1,4 +1,4 @@
-var initKnobs = function(mySynth) {
+var initKnobs = function() {
   $('.knobs').knob({
     'angleArc'    : 180,
     'angleOffset' : 270,

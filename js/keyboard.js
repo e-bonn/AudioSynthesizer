@@ -1,4 +1,4 @@
-var initKeyboard = function(mySynth) {
+var initKeyboard = function() {
   $('#key1-knob').trigger(
     'configure',
     {

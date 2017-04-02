@@ -343,8 +343,10 @@ Synth.prototype.playSound = function(f) {
 
     // One analyser per sound, draw each individual sound wave
     this.analysers[f] = this.context.createAnalyser();
+    this.analysers[f].fftSize = 2048;
+    this.analysers[f].maxDecibels = -10;
+    sound.delay.connect(this.context.destination);
     sound.delay.connect(this.analysers[f]);
-    this.analysers[f].connect(this.context.destination);
   }
 }
 
@@ -355,6 +357,5 @@ Synth.prototype.stopSound = function(f) {
     this.sounds[f].lfos[0].stop();
     this.sounds[f].lfos[1].stop();
     delete this.sounds[f];
-    delete this.analysers[f];
   }
 }

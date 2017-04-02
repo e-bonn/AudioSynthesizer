@@ -13,7 +13,6 @@ body {
 }
 
 .disable {
-  opacity: 0.6;
   pointer-events: none;
 }
 
@@ -55,11 +54,12 @@ body {
   margin-top: 10px;
 }
 
-.oscilloscope {
+.graphs {
   border: 5px outset #CCFFFF;
   border-radius: 5px;
+  float: left;
   height: 80px;
-  width: 1330px;
+  width: 637px;
   margin-left: 20px;
   margin-top: 10px;
 }

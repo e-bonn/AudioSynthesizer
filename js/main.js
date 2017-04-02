@@ -1,13 +1,13 @@
 var heldKeys = {};
-(function() {
-
 var mySynth = null;
+(function() {
 
 var init = function() {
   mySynth = new Synth();
-  initKnobs(mySynth);
-  initKeyboard(mySynth);
-  initButtons(mySynth);
+  initKnobs();
+  initKeyboard();
+  initButtons();
+  initGraphs();
 };
 
 document.addEventListener("DOMContentLoaded", function(event) {
@@ -43,18 +43,5 @@ document.addEventListener("keyup", function(event) {
     }
   }
 });
-
-function isEmpty(map) {
-   for(var key in obj) {
-      return !obj.hasOwnProperty(key);
-   }
-   return true;
-}
-
-var draw = function() {
-  for (var analyser in mySynth.analysers) {
-
-  }
-}
 
 })();

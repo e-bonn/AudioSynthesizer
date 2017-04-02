@@ -1,4 +1,4 @@
-var initButtons = function(mySynth) {
+var initButtons = function() {
   $('input[type=radio][name=osc1-main]').change(
     function() {
       switch (this.id) {
